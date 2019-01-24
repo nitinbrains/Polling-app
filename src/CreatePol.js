@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
+//import {Link} from 'react-router-dom'
 import uuid from 'uuid'
 import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
 
@@ -10,6 +11,7 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
          ans1:'',
          ans2:'',
          ans3:'',
+         newPoll:null
      }
 
      change=(e)=>{
@@ -18,8 +20,8 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
         })
       }
  
-      handleSubmit=(e)=>{
-          e.preventDefault();
+      submitForm=()=>{
+          //e.preventDefault();
           let new_quest=this.state.quest;
           let ans_0=this.state.ans0;
           let ans_1=this.state.ans1;
@@ -37,8 +39,15 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
                 ]
                 
              }
-             console.log(newData)
-          
+             this.setState({
+               newPoll:newData
+             },()=>{
+               console.log("bbbbbbbbbbbbbbbbbbbbbbb",newData);
+               this.props.handleSubmit(this.state.newPoll)
+
+             })
+             
+
           this.setState({
               quest:'',
               ans0:'',
@@ -47,12 +56,18 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
               ans3:''
           })
       }
+      handleSubmit=(e)=>{
+        e.preventDefault();
+        this.props.handleSubmit(this.state.newPoll)
+      }
 
   render() {
-      console.log(this.newData)
+      // console.log("newpol",this.state.newPoll);
     return (
       <div className="container">
-         <Form onSubmit={this.handleSubmit}>
+      {/* <Link style={{marginRight:"10px"}} to="/create">Create Poll</Link>
+      <Link to="/app">Show Polls</Link> */}
+         <Form>
          <FormGroup style={{marginBottom:'20px'}}>
           <Label for="exampleQuest">Question:</Label>
           <Input type="text" name="quest" value={this.state.quest} onChange={e=>this.change(e)} id="exampleQuest" placeholder="Enter Question" required/>
@@ -73,7 +88,7 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
           <Label for="exampleAns2">D.)</Label>
           <Input className="wid" type="text" name="ans3" value={this.state.ans3} onChange={e=>this.change(e)}  id="exampleAns3"  required />
         </FormGroup>
-        <Button>Submit</Button>
+        <Button type="submit" onClick={this.submitForm}>Submit</Button>
         </Form>
       </div>
     )

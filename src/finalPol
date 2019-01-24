@@ -1,0 +1,301 @@
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
+import {Button} from 'reactstrap'
+import './App.css';
+import Landing from './Landing'
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import CreatePol from './CreatePol';
+import Home from './Home';
+import Notfound from './Notfound';
+
+class App extends Component {
+  state={
+    pollData:[
+      {  id:0,
+         question:'Why is React so Popular?',
+         answers:[
+           { id:0, ans:'Virtual Dom' },
+           { id:1, ans:'Efficient' },
+           { id:2, ans:'I dont Know' },
+           { id:3, ans:'None of these' }
+         ],
+         
+      },
+      {  id:1,
+        question:'Who is Arvind Kejriwal?',
+        answers:[
+          { id:0, ans:'Poor Guy' },
+          { id:1, ans:'Great Soul' },
+          { id:2, ans:'President of Belgium' },
+          { id:3, ans:'ceo google' }
+        ]
+     },
+     {  id:2,
+      question:'DOM stands for?',
+      answers:[
+        { id:0, ans:'Data Object Master' },
+        { id:1, ans:'Document Object Manipulation' },
+        { id:2, ans:'Destroy object master' },
+        { id:3, ans:'None of these' }
+      ]
+   },
+   {  id:3,
+    question:'Where is Melbourne?',
+    answers:[
+      { id:0, ans:'In Nepal' },
+      { id:1, ans:'In Australia' },
+      { id:2, ans:'In South Korea' },
+      { id:3, ans:'Nowhere in the world' }
+    ]
+  }
+    ]
+  }
+
+  handleSubmit = (data) => {
+    console.log("doubt",data)
+    this.setState({
+        pollData: [...this.state.pollData, data]
+        
+    })
+    
+}
+  render() {
+    console.log("Polldata",this.state.pollData)
+    return (
+       <div className="container">
+       <Link style={{marginRight:"10px"}} to="/create"><Button color="primary" size="lg" block>Create Poll</Button></Link>
+       <Link style={{marginRight:"10px"}} to="/landing"><Button color="primary" size="lg" block>Show Polls</Button></Link>
+          <Router>
+      <Switch>
+          <Route exact path='/' component={Home}/>
+          {/* <Route exact path='/app' component={App}/> */}
+          <Route exact path='/landing' render={()=><Landing pollData={this.state.pollData}/>}/>
+          <Route exact path='/create'  render={() => <CreatePol handleSubmit={(data) => this.handleSubmit(data)}/>}/>
+          <Route component={Notfound}/>
+        </Switch>
+      </Router>
+      </div>
+    );
+  }
+}
+
+export default App;
+
+ //////////////////////////////////////////////////////////////////////
+
+ import React from 'react';
+import './App.css';
+ const Home=()=> {
+  return (
+    <div className="bgimg">
+       
+    </div>
+  )
+}
+
+export default Home;
+
+/////////////////////////////////////////////////////////////////////////
+
+import React, { Component } from 'react'
+import './App.css';
+//import {Link} from 'react-router-dom'
+import uuid from 'uuid'
+import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
+
+ class CreatePol extends Component {
+     state={
+         quest:'',
+         ans0:'',
+         ans1:'',
+         ans2:'',
+         ans3:'',
+         newPoll:null
+     }
+
+     change=(e)=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+      }
+ 
+      submitForm=()=>{
+          //e.preventDefault();
+          let new_quest=this.state.quest;
+          let ans_0=this.state.ans0;
+          let ans_1=this.state.ans1;
+          let ans_2=this.state.ans2;
+          let ans_3=this.state.ans3;
+
+          const newData=
+            {  id:uuid(),
+                question:new_quest,
+                answers:[
+                  { id:uuid(), ans:ans_0 },
+                  { id:uuid(), ans:ans_1},
+                  { id:uuid(), ans:ans_2 },
+                  { id:uuid(), ans:ans_3 }
+                ]
+                
+             }
+             this.setState({
+               newPoll:newData
+             },()=>{
+               console.log("bbbbbbbbbbbbbbbbbbbbbbb",newData);
+               this.props.handleSubmit(this.state.newPoll)
+
+             })
+             
+
+          this.setState({
+              quest:'',
+              ans0:'',
+              ans1:'',
+              ans2:'',
+              ans3:''
+          })
+      }
+      handleSubmit=(e)=>{
+        e.preventDefault();
+        this.props.handleSubmit(this.state.newPoll)
+      }
+
+  render() {
+      // console.log("newpol",this.state.newPoll);
+    return (
+      <div className="container">
+      {/* <Link style={{marginRight:"10px"}} to="/create">Create Poll</Link>
+      <Link to="/app">Show Polls</Link> */}
+         <Form>
+         <FormGroup style={{marginBottom:'20px'}}>
+          <Label for="exampleQuest">Question:</Label>
+          <Input type="text" name="quest" value={this.state.quest} onChange={e=>this.change(e)} id="exampleQuest" placeholder="Enter Question" required/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleAns0">A.)</Label>
+          <Input className="wid" type="text" name="ans0" value={this.state.ans0} onChange={e=>this.change(e)}  id="exampleAns0"  required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleAns1">B.)</Label>
+          <Input className="wid" type="text" name="ans1" value={this.state.ans1} onChange={e=>this.change(e)}  id="exampleAns1"  required />
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleAns2">C.)</Label>
+          <Input className="wid" type="text" name="ans2" value={this.state.ans2} onChange={e=>this.change(e)}  id="exampleAns2"  required/>
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleAns2">D.)</Label>
+          <Input className="wid" type="text" name="ans3" value={this.state.ans3} onChange={e=>this.change(e)}  id="exampleAns3"  required />
+        </FormGroup>
+        <Button type="submit" onClick={this.submitForm}>Submit</Button>
+        </Form>
+      </div>
+    )
+  }
+}
+export default CreatePol;
+
+/////////////////////////////////////////////////////////////////////////
+
+
+import React, { Component } from 'react'
+import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
+
+ class Landing extends Component {
+     constructor(props) {
+       super(props)
+     }
+    
+  render() {
+      //const {elems}=this.props;
+
+     
+      
+    return (
+      // <div>
+      //   <h3><span style={{fontWeight:'bolder'}}>Question:</span> {elems.question}</h3>
+      //   <h3><span style={{fontWeight:'bolder', color:'#b30000'}}>Options:</span></h3>
+      //   {elems.answers.map((v,i)=>(
+      //       <ListGroup>
+      //           <ListGroupItem>
+      //            <Label check>
+      //           <Input style={{marginLeft:"-1rem"}} type="radio" name="radio2" value={v.ans} />{' '}
+      //           {v.ans}
+      //           </Label>
+      //           </ListGroupItem>
+      //       </ListGroup>
+      //   ))}
+      //   <Button style={{marginTop:'20px',marginBottom:'20px'}}>Submit</Button>
+      // </div>
+      <div>
+        {this.props.pollData.map((v,i)=>(
+          <div>
+          <h3><span style={{fontWeight:'bolder'}}>Question:</span> {v.question}</h3>
+          <h3><span style={{fontWeight:'bolder', color:'#b30000'}}>Options:</span></h3>
+          {v.answers.map((v,i)=>(
+             <ListGroup>
+                       <ListGroupItem>
+                         <Label check>
+                     <Input style={{marginLeft:"-1rem"}} type="radio" name="radio2" value={v.ans} />{' '}
+                       {v.ans}
+                       </Label>
+                        </ListGroupItem>
+                    </ListGroup>
+          ))}
+        </div>))}
+        {/* <h3><span style={{fontWeight:'bolder', color:'#b30000'}}>Options:</span></h3> */}
+        
+      </div>
+    )
+  }
+}
+export default Landing;
+
+////////////////////////////////////////////////////////////////////////////
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {HashRouter as Router} from 'react-router-dom'
+//import RouteFile from './RouteFile'
+import * as serviceWorker from './serviceWorker';
+
+ReactDOM.render(<Router><App/></Router>, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
+
+
+//////////////////////////////////////////////////////////////////////
+
+import React from 'react'
+
+ const Notfound=()=> {
+  return (
+    <div>
+      OOPS! Page Not Found
+    </div>
+  )
+}
+export default Notfound
+
+/////////////////////////////////////////////////////////////////////////
+
+.container{
+  margin: 5%;
+}
+
+.wid{
+  width: 70% !important;
+}
+
+.bgimg{
+  background-image: url(./image.jpg);
+  background-size: cover;
+  max-width: 100%;
+  height: 700px;
+}

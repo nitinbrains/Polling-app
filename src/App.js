@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {Link} from 'react-router-dom'
+import {Button} from 'reactstrap'
 import './App.css';
 import Landing from './Landing'
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import CreatePol from './CreatePol';
+import Home from './Home';
+import Notfound from './Notfound';
 
 class App extends Component {
   state={
-    data:[
+    pollData:[
       {  id:0,
          question:'Why is React so Popular?',
          answers:[
@@ -45,16 +50,35 @@ class App extends Component {
   }
     ]
   }
+
+  handleSubmit = (data) => {
+    console.log("doubt",data)
+    this.setState({
+        pollData: [...this.state.pollData, data]
+        
+    })
+    
+}
   render() {
-    console.log(this.state.data)
+    console.log("Polldata",this.state.pollData)
     return (
        <div className="container">
-        {this.state.data.map((v,i)=>(
-          <Landing index={i} elems={v} />
-        ))}
+       <Link style={{marginRight:"10px"}} to="/create"><Button color="primary" size="lg" block>Create Poll</Button></Link>
+       <Link style={{marginRight:"10px"}} to="/landing"><Button color="primary" size="lg" block>Show Polls</Button></Link>
+          <Router>
+      <Switch>
+          <Route exact path='/' component={Home}/>
+          {/* <Route exact path='/app' component={App}/> */}
+          <Route exact path='/landing' render={()=><Landing pollData={this.state.pollData}/>}/>
+          <Route exact path='/create'  render={() => <CreatePol handleSubmit={(data) => this.handleSubmit(data)}/>}/>
+          <Route component={Notfound}/>
+        </Switch>
+      </Router>
       </div>
     );
   }
 }
 
 export default App;
+
+ 

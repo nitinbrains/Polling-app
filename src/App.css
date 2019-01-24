@@ -5,3 +5,10 @@
 .wid{
   width: 70% !important;
 }
+
+.bgimg{
+  background-image: url(./image.jpg);
+  background-size: cover;
+  max-width: 100%;
+  height: 700px;
+}
