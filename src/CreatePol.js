@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css';
 import uuid from 'uuid'
-import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
  class CreatePol extends Component {
      state={

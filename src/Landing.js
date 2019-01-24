@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
 
- class Landing extends Component {
-     constructor(props) {
-       super(props)
-     } 
-  render() {
+ const Landing=(props)=>  {
+     
     return (
       <div>
-        {this.props.pollData.map((v,i)=>(
+        {props.pollData.map((v,i)=>(
           <div>
           <h3><span style={{fontWeight:'bolder'}}>Question:</span> {v.question}</h3>
           <h3><span style={{fontWeight:'bolder', color:'#b30000'}}>Options:</span></h3>
@@ -16,7 +13,7 @@ import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
              <ListGroup>
                        <ListGroupItem>
                          <Label check>
-                     <Input style={{marginLeft:"-1rem"}} type="radio" name="radio2" value={v.ans}  />{' '}
+                     <Input style={{marginLeft:"-1rem"}} type="radio" name="radio1" value={v.ans}  />{' '}
                        {v.ans}
                        </Label>
                         </ListGroupItem>
@@ -26,6 +23,5 @@ import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
         </div>))}
       </div>
     )
-  }
 }
 export default Landing;
