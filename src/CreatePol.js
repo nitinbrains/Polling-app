@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css';
-//import {Link} from 'react-router-dom'
 import uuid from 'uuid'
 import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
 
@@ -21,7 +20,6 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
       }
  
       submitForm=()=>{
-          //e.preventDefault();
           let new_quest=this.state.quest;
           let ans_0=this.state.ans0;
           let ans_1=this.state.ans1;
@@ -44,10 +42,7 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
              },()=>{
                console.log("bbbbbbbbbbbbbbbbbbbbbbb",newData);
                this.props.handleSubmit(this.state.newPoll)
-
              })
-             
-
           this.setState({
               quest:'',
               ans0:'',
@@ -62,11 +57,8 @@ import { Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap'
       }
 
   render() {
-      // console.log("newpol",this.state.newPoll);
     return (
       <div className="container">
-      {/* <Link style={{marginRight:"10px"}} to="/create">Create Poll</Link>
-      <Link to="/app">Show Polls</Link> */}
          <Form>
          <FormGroup style={{marginBottom:'20px'}}>
           <Label for="exampleQuest">Question:</Label>

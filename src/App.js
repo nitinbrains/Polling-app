@@ -18,7 +18,7 @@ class App extends Component {
            { id:1, ans:'Efficient' },
            { id:2, ans:'I dont Know' },
            { id:3, ans:'None of these' }
-         ],
+         ]
          
       },
       {  id:1,
@@ -63,12 +63,11 @@ class App extends Component {
     console.log("Polldata",this.state.pollData)
     return (
        <div className="container">
-       <Link style={{marginRight:"10px"}} to="/create"><Button color="primary" size="lg" block>Create Poll</Button></Link>
-       <Link style={{marginRight:"10px"}} to="/landing"><Button color="primary" size="lg" block>Show Polls</Button></Link>
+       <Link style={{marginRight:"10px"}} to="/create"><Button color="info" size="lg" block>Create Poll</Button></Link>
+       <Link style={{marginRight:"10px"}} to="/landing"><Button color="info" size="lg" block>Show Polls</Button></Link>
           <Router>
       <Switch>
           <Route exact path='/' component={Home}/>
-          {/* <Route exact path='/app' component={App}/> */}
           <Route exact path='/landing' render={()=><Landing pollData={this.state.pollData}/>}/>
           <Route exact path='/create'  render={() => <CreatePol handleSubmit={(data) => this.handleSubmit(data)}/>}/>
           <Route component={Notfound}/>
