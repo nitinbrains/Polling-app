@@ -16,7 +16,7 @@ import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
              <ListGroup>
                        <ListGroupItem>
                          <Label check>
-                     <Input style={{marginLeft:"-1rem"}} type="radio" name="radio2" value={v.ans} />{' '}
+                     <Input style={{marginLeft:"-1rem"}} type="radio" name="radio2" value={v.ans}  />{' '}
                        {v.ans}
                        </Label>
                         </ListGroupItem>
