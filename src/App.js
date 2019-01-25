@@ -7,6 +7,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 import CreatePol from './CreatePol';
 import Home from './Home';
 import Notfound from './Notfound';
+import EditPol from './EditPol'
 
 class App extends Component {
   state={
@@ -53,10 +54,27 @@ class App extends Component {
 
   handleSubmit = (data) => {
     console.log("doubt",data)
+   const bob= this.state.pollData.map((v,i)=>(v.id))
+
+  this.state.pollData.map((v,i)=>{
+    if(v.id.includes(data)){
+      v.question=data.question
+    }
+  })
+
+
+   console.log(bob,"----------------------")
+   if(bob.includes(data.id)){
+          this.setState({
+       
+          })
+   } else{
+
     this.setState({
         pollData: [...this.state.pollData, data]
         
     })
+  }
     
 }
   render() {
@@ -69,6 +87,7 @@ class App extends Component {
       <Switch>
           <Route exact path='/' component={Home}/>
           <Route exact path='/landing' render={()=><Landing pollData={this.state.pollData}/>}/>
+    <Route exact path='/edit/:id' render={(props) => <EditPol handleSubmit={(data) => this.handleSubmit(data)} indPollData={this.state.pollData} {...props} /> }/>
           <Route exact path='/create'  render={() => <CreatePol handleSubmit={(data) => this.handleSubmit(data)}/>}/>
           <Route component={Notfound}/>
         </Switch>

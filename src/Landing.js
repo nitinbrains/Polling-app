@@ -1,13 +1,13 @@
 import React from 'react'
 import {Input,ListGroup,ListGroupItem,Button,Label} from 'reactstrap'
-
+import {Link} from 'react-router-dom'
  const Landing=(props)=>  {
      
     return (
       <div>
         {props.pollData.map((v,i)=>(
           <div>
-          <h3><span style={{fontWeight:'bolder'}}>Question:</span> {v.question}</h3>
+          <h3><span style={{fontWeight:'bolder'}}>Question:</span> {v.question}<Link to={`edit/${v.id}`}><i className="fas fa-pencil-alt" style={{cursor:'pointer',float:'right', marginRight:'1rem'}}></i></Link></h3>
           <h3><span style={{fontWeight:'bolder', color:'#b30000'}}>Options:</span></h3>
           {v.answers.map((v,i)=>(
              <ListGroup>
