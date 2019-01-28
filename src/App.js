@@ -53,30 +53,21 @@ class App extends Component {
   }
 
   handleSubmit = (data) => {
-    console.log("doubt",data)
-   const bob= this.state.pollData.map((v,i)=>(v.id))
-
-  this.state.pollData.map((v,i)=>{
-    if(v.id.includes(data)){
-      v.question=data.question
+    const dataFilt=this.state.pollData.filter(pdata=>pdata.id==data.id)
+    if(dataFilt.length===0){
+      this.setState({
+        pollData:[...this.state.pollData, data]
+      })
+    } else {
+      let stateCpy=[...this.state.pollData]
+      let idFiltData=stateCpy.filter(pdata=>pdata.id!=data.id)
+      let EditedData=[...idFiltData,data]
+      this.setState({
+        pollData:EditedData
+      })
     }
-  })
-
-
-   console.log(bob,"----------------------")
-   if(bob.includes(data.id)){
-          this.setState({
-       
-          })
-   } else{
-
-    this.setState({
-        pollData: [...this.state.pollData, data]
-        
-    })
   }
-    
-}
+
   render() {
     console.log("Polldata",this.state.pollData)
     return (
