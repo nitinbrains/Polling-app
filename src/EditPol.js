@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './App.css';
-import {Link} from 'react-router-dom'
 import uuid from 'uuid'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
@@ -21,6 +20,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
       }
  
       submitForm=()=>{
+        const myId=this.props.match.params.id;
+        
           let new_quest=this.state.quest;
           let ans_0=this.state.ans0;
           let ans_1=this.state.ans1;
@@ -28,7 +29,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
           let ans_3=this.state.ans3;
 
           const newData=
-            {  id:uuid(),
+            {  id:myId,
                 question:new_quest,
                 answers:[
                   { id:uuid(), ans:ans_0 },
@@ -54,14 +55,50 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
               ans3:''
           })
       }
-      // handleSubmit=(e)=>{
-      //   e.preventDefault();
-      //   this.props.handleSubmit(this.state.newPoll)
-      // }
 
-  render() {
-    console.log("stateNewpol",this.state.newPoll);
+    componentDidMount(){
+        const myId=this.props.match.params.id;
+        console.log('iiiiiiiiiiiiiiiiiii',myId)
+        const filteredData=this.props.indPollData.filter(data=>data.id==myId)
+        const questBack=filteredData.map((v,i)=>(v.question))
+        const questMast=questBack[0]
+        const ansBack=filteredData.map((v,i)=>(v.answers))
+        const bolt=ansBack.map((v,i)=>(v[0]))
+        const preansw0=bolt.map((v,i)=>(v.ans))
+        const answ0=preansw0[0]
+        
+        const have2=ansBack.map((v,i)=>(v[1]))
+        const have02=have2.map((v,i)=>(v.ans))
+        const answ1=have02[0]
+
+        const have3=ansBack.map((v,i)=>(v[2]))
+        const have03=have3.map((v,i)=>(v.ans))
+        const answ2=have03[0]
+
+        const have4=ansBack.map((v,i)=>(v[3]))
+        const have04=have4.map((v,i)=>(v.ans))
+        const answ3=have04[0]
+        
+        
+        
+        console.log("hahahaha",questMast)
+        this.setState({
+            quest:questMast,
+            ans0:answ0,
+            ans1:answ1,
+            ans2:answ2,
+            ans3:answ3
+        })
+       
+
+    }
+
     
+  render() {
+    console.log("hurrrrrrrrrrrrr",this.props.indPollData)
+    console.log("stateNewpol",this.state.newPoll);
+    // const {id}=this.props.match.params;
+    // console.log('iiiiiiiiiiiiiiiiiii',id)
     return (
       <div className="container">
          <Form>
